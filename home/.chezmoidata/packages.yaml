@@ -1,0 +1,9 @@
+packages:
+  linux:
+    pacman:
+      - base-devel
+      - neovim
+      - git
+    yay:
+      - cava
+      - spotify

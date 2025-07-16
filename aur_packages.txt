@@ -1,0 +1,8 @@
+ani-cli
+ani-skip-git
+openai-codex-debug
+resvg
+swaylock-effects
+thorium-browser-bin
+wlogout
+yay-debug

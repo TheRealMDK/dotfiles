@@ -1,0 +1,30 @@
+{
+	"name": "Vimium C",
+	"@time": "6/26/2025, 10:00:44 AM",
+	"time": 1750924844236,
+	"environment": {
+		"extension": "2.12.2",
+		"platform": "linux",
+		"chromium": 137
+	},
+	"allBrowserUrls": true,
+	"exclusionRules": [],
+	"keyLayout": 2,
+	"keyMappings": [
+		"#!no-check",
+		"map zi zoomIn",
+		"map zo zoomOut",
+		"map zz zoomReset",
+		"map d removeTab",
+		""
+	],
+	"newTabUrl": "https://www.google.co.za",
+	"userDefinedCss": [
+		".LH, .D>.LH { background: green;font-size: 25px; }",
+		".LH { border: /*!DPI*/ 1px solid lightgreen; }",
+		"/* #omni */",
+		".s { background-color: #d8e3f3; }",
+		""
+	],
+	"vimSync": true
+}

@@ -1,0 +1,230 @@
+{{- /* # Sets the $chassisType variable to "desktop" or "laptop" on macOS, Linux, and Windows.*/ -}}
+{{- $chassisType := "desktop" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   if contains "MacBook" (output "system_profiler" "SPHardwareDataType") -}}
+{{-     $chassisType = "laptop" -}}
+{{-   else -}}
+{{-     $chassisType = "desktop" -}}
+{{-   end -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis -}}
+{{- else if eq .chezmoi.os "windows" -}}
+{{-   $chassisType = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim -}}
+{{- end -}}
+// -*- mode: jsonc -*-
+{
+  "height": 40,
+  "spacing": 3,
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "reload_style_on_change": true,
+
+  "modules-left": ["custom/power", "hyprland/workspaces"],
+
+  "modules-right": [
+    "group/utils",
+    "cpu",
+    "memory",
+    "backlight",
+    "group/volume",
+    {{- if eq $chassisType "laptop" }}
+    "battery",
+    {{- end }}
+    "group/info",
+  ],
+
+  "custom/power": {
+    "format": "  ",
+    "on-click": "wlogout",
+    "tooltip": false,
+  },
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "show-special": true,
+    "special-visible-only": true,
+    "on-click": "activate",
+    "all-outputs": true,
+    "sort-by-number": true,
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "10",
+      "focused": "",
+      "default": "",
+      "A": "A",
+      "S": "S",
+      "D": "D",
+      "F": "F",
+      "Z": "Z",
+      "magic": "X",
+      "V": "V",
+      "B": "B",
+    },
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+  },
+
+  "clock": {
+    "timezone": "Africa/Johannesburg",
+    "format": "{:%H:%M}", //" {:%a %d %b  %H:%M}"
+    "on-click": "$HOME/.config/waybar/scripts/OCV",
+    "tooltip": false,
+  },
+
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false,
+    // "on-click": "kitty -e btop",
+  },
+
+  "memory": {
+    "format": " {}%",
+    "on-click": "kitty -e btop",
+    "tooltip": false,
+  },
+
+  "tray": {
+    "spacing": 3,
+    // "show-passive-items": true,
+    "tooltip": false,
+  },
+
+  "bluetooth": {
+    "format-on": "󰂯",
+    "format-off": "BT-off",
+    "format-disabled": "󰂲",
+    "format-connected-battery": "󰂯 {device_battery_percentage}%",
+    "format-alt": "{device_alias} 󰂯",
+    "tooltip": false,
+    "on-click": "blueman-manager",
+  },
+
+  "custom/expand": {
+    "format": "",
+    "tooltip": false,
+  },
+
+  "group/utils": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false,
+      "click-to-reveal": true,
+    },
+    "spacing": 10,
+    "modules": ["custom/expand", "custom/weather", "custom/network_traffic"],
+  },
+
+  "group/volume": {
+    "orientation": "inherit",
+    "spacing": 10,
+    "modules": ["pulseaudio", "pulseaudio/slider"],
+  },
+
+  "group/info": {
+    "orientation": "inherit",
+    "spacing": 10,
+    "modules": ["tray", "custom/notification", "clock"],
+  },
+
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 150,
+    "orientation": "horizontal",
+  },
+
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""],
+    },
+    "on-click": "kitty -e pulsemixer", //"wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    // "reverse-scrolling": true,
+    "scroll-step": 5,
+    "max-volume": 150,
+    // "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-",
+    // "on-scroll-down": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
+  },
+
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": {
+      "numlock": "N {icon}",
+      "capslock": "C {icon}",
+    },
+    "format-icons": {
+      "locked": "",
+      "unlocked": "",
+    },
+  },
+
+  "custom/network_traffic": {
+    "exec": "$HOME/.config/waybar/scripts/network-traffic.sh",
+    "return-type": "json",
+    "format-ethernet": "{icon} {ifname} ⇣{bandwidthDownBytes} ⇡{bandwidthUpBytes}",
+  },
+
+  "custom/weather": {
+    "exec": "curl 'https://wttr.in/Mossel+bay?format=2'",
+    "interval": 900,
+    "on-click": "yad --html --uri='https://wttr.in/Mossel+bay' --center --fixed --width=1000 --height=680 --timeout=60 --timeout-indicator=right",
+    "tooltip": false,
+  },
+
+  "battery": {
+    "interval": 1,
+    "states": {
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": " {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
+    // "format-icons": ["", "", "", "", ""],
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip": false,
+  },
+
+  "backlight": {
+    "device": "amdgpu_bl1",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "format": "{icon} {percent}%",
+    // "reverse-scrolling": true,
+    "tooltip": false,
+  },
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": "",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true,
+  },
+}

@@ -1,0 +1,66 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+# Variables
+
+CHECKMARK=$(printf '\u2713')
+
+RESET='\e[0m'
+
+BLUE='\e[34m'
+YELLOW='\e[33m'
+GREEN='\e[32m'
+RED='\e[31m'
+
+BOLD_BLUE='\e[1;34m'
+BOLD_YELLOW='\e[1;33m'
+BOLD_GREEN='\e[1;32m'
+BOLD_RED='\e[1;31m'
+
+DIM_BLUE='\e[2;34m'
+DIM_YELLOW='\e[2;33m'
+DIM_GREEN='\e[2;32m'
+DIM_RED='\e[2;31m'
+
+# Ask for sudo password upfront
+sudo -v
+
+# Keep sudo alive until script ends
+while true; do
+  sudo -n true
+  sleep 6000
+  kill -0 "$$" || exit
+done 2>/dev/null &
+
+# Execute function
+
+timestamp() { date "+%Y-%m-%d %H:%M:%S"; }
+
+execute() {
+  local msg="$1"
+  local cmd="$2"
+  shift
+  printf "${BLUE}%s${RESET}\n" "-> $msg @ $(timestamp)"
+  printf "%s\n" "   Executing: $cmd"
+  eval "$cmd"
+}
+
+if [ -z "$HOME" ]; then
+  printf "${BOLD_RED}%s${RESET}" "ERROR: \$HOME is not set. Aborting... "
+  exit 1
+fi
+
+# Install pacman packages
+if command -v pacman &>/dev/null; then
+  pacman_cmd="sudo pacman -S --needed --noconfirm {{- range .packages.linux.pacman }} {{ . }}{{- end }}"
+  execute "Installing packages with pacman" "$pacman_cmd"
+  printf "${BOLD_GREEN}%s %s${RESET}\n\n" "$CHECKMARK" " Successfully installed packages with pacman @ $(timestamp)"
+fi
+
+# Install yay packages
+if command -v yay &>/dev/null; then
+  yay_cmd="yay -S --needed --noconfirm {{- range .packages.linux.yay }} {{ . }}{{- end }}"
+  execute "Installing packages with yay" " $yay_cmd"
+  printf "${BOLD_GREEN}%s %s${RESET}\n\n" "$CHECKMARK" " Successfully installed packages with yay @ $(timestamp)"
+fi
+{{ end -}}
