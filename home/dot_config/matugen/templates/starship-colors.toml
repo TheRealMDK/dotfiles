@@ -1,0 +1,183 @@
+palette = 'colors'
+
+[palettes.colors]
+background = '{{colors.background.default.hex}}'
+primary = '{{colors.primary.default.hex}}'
+color0 = '{{colors.source_color.default.hex}}'
+color1 = '{{colors.primary_fixed_dim.default.hex}}'
+color2 = '{{colors.on_primary.default.hex}}'
+color3 = '{{colors.on_surface_variant.default.hex}}'
+color4 = '{{colors.surface_container.default.hex}}'
+color5 = '{{colors.on_primary.default.hex}}'
+color6 = '{{colors.surface_dim.default.hex}}'
+color7 = '{{colors.surface.default.hex}}'
+color8 = '{{colors.primary.default.hex}}'
+color9 = '{{colors.tertiary.default.hex}}'
+
+[username]
+format = " [╭─$user]($style)@"
+show_always = true
+style_root = "color0"
+style_user = "color0"
+
+# Second param
+[hostname]
+disabled = false
+format = "[$hostname]($style) in "
+ssh_only = false
+style = "color0"
+#trim_at = "-"
+
+# Third param
+[directory]
+style = "primary"
+truncate_to_repo = true
+truncation_length = 0
+truncation_symbol = "repo: "
+
+# Fourth param
+[sudo]
+disabled = false
+
+# Before all the version info (python, nodejs, php, etc.)
+[git_status]
+ahead = "⇡${count}"
+behind = "⇣${count}"
+deleted = "x"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+style = "white"
+
+# Last param in the first line/row
+[cmd_duration]
+disabled = false
+format = "took [$duration]($style)"
+min_time = 1
+style = "primary"
+
+## SECOND LINE/ROW: Prompt
+# Somethere at the beginning
+[battery]
+charging_symbol = ""
+disabled = true
+discharging_symbol = ""
+full_symbol = ""
+
+[[battery.display]] # "bold red" style when capacity is between 0% and 15%
+disabled = true
+style = "bold red"
+threshold = 15
+
+[[battery.display]] # "bold yellow" style when capacity is between 15% and 50%
+disabled = true
+style = "bold yellow"
+threshold = 50
+
+[[battery.display]] # "bold green" style when capacity is between 50% and 80%
+disabled = true
+style = "bold green"
+threshold = 80
+
+# Prompt: optional param 1
+[time]
+disabled = false
+format = " 🕙 $time($style)\n"
+style = "bright-white"
+time_format = "%T"
+
+# Prompt: param 2
+[character]
+error_symbol = " [×](color0)"
+success_symbol = " [╰─λ](color0)"
+
+# SYMBOLS
+[status]
+disabled = false
+format = '[\[$symbol$status_common_meaning$status_signal_name$status_maybe_int\]]($style)'
+map_symbol = true
+pipestatus = true
+symbol = "🔴"
+style = "color0"
+
+[aws]
+symbol = " "
+style = "primary"
+
+[conda]
+symbol = " "
+style = "primary"
+
+[dart]
+symbol = " "
+style = "primary"
+
+[docker_context]
+symbol = " "
+style = "primary"
+
+[elixir]
+symbol = " "
+style = "primary"
+
+[elm]
+symbol = " "
+style = "primary"
+
+[git_branch]
+symbol = " "
+style = "primary"
+
+[golang]
+symbol = " "
+style = "primary"
+
+[hg_branch]
+symbol = " "
+style = "primary"
+
+[java]
+symbol = " "
+style = "primary"
+
+[julia]
+symbol = " "
+style = "primary"
+
+[nim]
+symbol = " "
+style = "primary"
+
+[nix_shell]
+symbol = " "
+style = "primary"
+
+[nodejs]
+symbol = " "
+style = "primary"
+
+[package]
+symbol = " "
+style = "primary"
+
+[perl]
+symbol = " "
+style = "primary"
+
+[php]
+symbol = " "
+style = "primary"
+
+[python]
+symbol = " "
+style = "primary"
+
+[ruby]
+symbol = " "
+style = "primary"
+
+[rust]
+symbol = " "
+style = "primary"
+
+[swift]
+symbol = "ﯣ "
+style = "primary"

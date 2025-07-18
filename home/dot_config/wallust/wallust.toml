@@ -1,0 +1,8 @@
+palette = "dark16"
+check_contrast = true
+
+[templates]
+
+hypr = { src = "hyprland.conf", dst = "~/.config/hypr/colors.conf" }
+kitty = { src = 'kitty.conf', dst = '~/.config/kitty/colors.conf' }
+# waybar = { src = "waybar.css", dst = "~/.config/waybar/colors.css" }

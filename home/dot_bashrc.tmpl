@@ -28,6 +28,7 @@ alias continue="$HOME/scripts/anicli-continue.sh"
 # alias continue='ani-cli --dub -c --skip'
 alias copySrcToDest="$HOME/scripts/copySrcToDest.sh"
 alias cpuInfo='lscpu'
+alias cm='chezmoi'
 alias dir='dir --color=auto'
 alias diskInfo='df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
 alias egrep='ugrep -E --color=auto'
@@ -105,7 +106,7 @@ alias yayin='yay -S --needed'
 #alias timeshift-gtk='sudo -E timeshift-launcher'
 #alias virtual='hyprctl output create headless VIRTUAL-1'
 
-PS1="\[\033[1;34m\][\u@\h \W$(__git_ps1 " (%s)")]\$\[\033[0m\] "
+PS1="\[\033[1;34m\][\u@\h \W$(__git_ps1 " (%s)")]\[\033[0m\]\n\[\033[1;34m\]╰─λ \[\033[0m\]"
 
 HISTSIZE=10000
 HISTFILESIZE=20000
@@ -122,7 +123,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-eval "$(starship init bash)"
+# eval "$(starship init bash)"
 eval "$(register-python-argcomplete pipx)"
 
 cpv() {

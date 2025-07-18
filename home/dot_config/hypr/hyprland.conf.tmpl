@@ -11,6 +11,8 @@
 {{- else if eq .chezmoi.os "windows" -}}
 {{-   $chassisType = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim -}}
 {{- end -}}
+source = ~/.config/hypr/colors.conf
+
 monitor=,preferred,auto,auto
 
 $terminal = kitty
@@ -25,7 +27,7 @@ exec-once = /usr/lib/polkit-kde-authentication-agent-1 &
 exec-once = swaync &
 exec-once = udiskie &
 exec-once = pkill waybar; waybar &
-exec-once = wpaperd &
+exec-once = waypaper --random
 exec-once = nm-applet &
 exec-once = blueman-applet &
 exec-once = kitty
@@ -53,8 +55,8 @@ general {
 
     border_size = 2
 
-    col.active_border = rgba(b73838ff) rgba(b73838ff) 45deg
-    col.inactive_border = rgba(595959aa)
+    # col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+    # col.inactive_border = rgba(595959aa)
 
     resize_on_border = true
 
@@ -67,8 +69,11 @@ decoration {
     rounding = 10
     rounding_power = 2
 
-    active_opacity = 1.0
-    inactive_opacity = 1.0
+    # active_opacity = 0.8
+    # inactive_opacity = 0.8
+
+    dim_inactive = true
+    dim_strength = 0.3
 
     shadow {
         enabled = true
@@ -222,7 +227,8 @@ bind = $mainMod, P, pseudo,
 bind = $mainMod CTRL, S, togglesplit,
 bind = $mainMod, grave, fullscreen
 # bind = $mainMod SHIFT, grave, fullscreenstate
-bind = CTRL, grave,exec, killall -9 wpaperd && wpaperd
+bind = CTRL, grave,exec,  waypaper --random
+# bind = CTRL, grave,exec, killall -9 wpaperd && wpaperd
 bind = CTRL ALT, DELETE,  exec, wlogout
 bind = CTRL SHIFT, ESCAPE, exec, [float] gnome-system-monitor
 bind = $mainMod, F12, exec, killall -SIGUSR2 waybar

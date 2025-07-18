@@ -46,6 +46,7 @@
     "special-visible-only": true,
     "on-click": "activate",
     "all-outputs": true,
+    "tooltip": false,
     "sort-by-number": true,
     "format-icons": {
       "1": "1",
@@ -83,12 +84,10 @@
   "cpu": {
     "format": " {usage}%",
     "tooltip": false,
-    // "on-click": "kitty -e btop",
   },
 
   "memory": {
     "format": " {}%",
-    "on-click": "kitty -e btop",
     "tooltip": false,
   },
 
@@ -114,6 +113,7 @@
   },
 
   "group/utils": {
+    "tooltip": false,
     "orientation": "inherit",
     "drawer": {
       "transition-duration": 500,
@@ -126,23 +126,27 @@
 
   "group/volume": {
     "orientation": "inherit",
+    "tooltip": false,
     "spacing": 10,
     "modules": ["pulseaudio", "pulseaudio/slider"],
   },
 
   "group/info": {
     "orientation": "inherit",
+    "tooltip": false,
     "spacing": 10,
     "modules": ["tray", "custom/notification", "clock"],
   },
 
   "pulseaudio/slider": {
     "min": 0,
+    "tooltip": false,
     "max": 150,
     "orientation": "horizontal",
   },
 
   "pulseaudio": {
+    "tooltip": false,
     "format": "{icon}  {volume}%",
     "format-icons": {
       "headphone": "",
@@ -164,6 +168,7 @@
   "keyboard-state": {
     "numlock": true,
     "capslock": true,
+    "tooltip": false,
     "format": {
       "numlock": "N {icon}",
       "capslock": "C {icon}",
@@ -178,6 +183,7 @@
     "exec": "$HOME/.config/waybar/scripts/network-traffic.sh",
     "return-type": "json",
     "format-ethernet": "{icon} {ifname} ⇣{bandwidthDownBytes} ⇡{bandwidthUpBytes}",
+    "tooltip": false,
   },
 
   "custom/weather": {

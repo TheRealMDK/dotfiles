@@ -1,14 +1,16 @@
+@import "colors.css";
+
 * {
   font-family:
     "JetBrainsMono Nerd Font", Poppins, FontAwesome, Roboto, Helvetica, Arial,
     sans-serif;
   font-size: 14px;
   font-weight: bold;
-  color: #fff;
+  color: @on_background;
 }
 
 window#waybar {
-  background-color: rgba(33, 33, 33, 0.9);
+  background-color: rgba(33, 33, 33, 0.8);
   transition-property: background-color;
   transition-duration: 0.5s;
   box-shadow: inset 0 -3px #333;
@@ -20,19 +22,22 @@ window#waybar {
   opacity: 0;
   background-image: none;
   border: none;
+  border-radius: 50%;
   box-shadow: none;
+  background-color: @background;
 }
 
 #pulseaudio-slider trough {
   min-height: 10px;
   min-width: 80px;
   border-radius: 5px;
-  background-color: #333;
+  background-color: @background;
 }
 
 #pulseaudio-slider highlight {
   min-width: 10px;
   border-radius: 5px;
+  background-color: @source_color;
 }
 
 button {
@@ -45,7 +50,7 @@ button {
 
 button:hover {
   background: inherit;
-  box-shadow: inset 0 -3px #b73838;
+  box-shadow: inset 0 -3px @source_color;
 }
 
 #workspaces button {
@@ -54,16 +59,16 @@ button:hover {
 }
 
 #workspaces button:hover {
-  color: #b73838;
-  box-shadow: inset 0 -3px #b73838;
+  color: @on_background;
+  box-shadow: inset 0 -3px @source_color;
 }
 
 #workspaces button.active {
-  box-shadow: inset 0 -3px #b73838;
+  box-shadow: inset 0 -3px @source_color;
 }
 
 #workspaces button.urgent {
-  background-color: #b73838;
+  background-color: @on_error;
 }
 
 #backlight,
@@ -71,15 +76,16 @@ button:hover {
 #bluetooth,
 #cpu,
 #memory,
-#network {
+#network,
+#pulseaudio {
   padding: 0 10px;
   margin-right: 10px;
   /* background-color: #333; */
-  box-shadow: inset 0 -3px #b73838;
+  box-shadow: inset 0 -3px @source_color;
 }
 
 #volume {
-  box-shadow: inset 0 -3px #b73838;
+  box-shadow: inset 0 -3px @source_color;
   margin-right: 10px;
 }
 
@@ -108,7 +114,7 @@ button:hover {
 #tray,
 #custom-notification,
 #clock {
-  background-color: #b73838;
+  background-color: @source_color;
   padding: 0 5px;
 }
 
@@ -117,16 +123,16 @@ button:hover {
 }
 
 #network {
-  color: #b73838;
+  color: @source_color;
 }
 
 #network.disconnected {
-  background-color: #b73838;
+  background-color: @color0;
 }
 
 #custom-network_traffic {
   margin-right: 10px;
-  color: #b73838;
+  color: @source_color;
 }
 
 #custom-weather {
@@ -143,7 +149,7 @@ button:hover {
 
 #tray > .needs-attention {
   /* -gtk-icon-effect: highlight; */
-  background-color: #b73838;
+  background-color: @error_container;
 }
 
 #battery {
